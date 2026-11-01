@@ -1,0 +1,70 @@
+{
+  "features": [
+    "Applicant_Income",
+    "Coapplicant_Income",
+    "Age",
+    "Dependents",
+    "Credit_Score",
+    "Existing_Loans",
+    "DTI_Ratio",
+    "Savings",
+    "Collateral_Value",
+    "Loan_Amount",
+    "Loan_Term",
+    "Education_Level",
+    "Employment_Status_Salaried",
+    "Employment_Status_Self-employed",
+    "Employment_Status_Unemployed",
+    "Marital_Status_Single",
+    "Loan_Purpose_Car",
+    "Loan_Purpose_Education",
+    "Loan_Purpose_Home",
+    "Loan_Purpose_Personal",
+    "Property_Area_Semiurban",
+    "Property_Area_Urban",
+    "Gender_Male",
+    "Employer_Category_Government",
+    "Employer_Category_MNC",
+    "Employer_Category_Private",
+    "Employer_Category_Unemployed"
+  ],
+  "categories": {
+    "Employment_Status": [
+      "Contract",
+      "Salaried",
+      "Self-employed",
+      "Unemployed"
+    ],
+    "Marital_Status": [
+      "Married",
+      "Single"
+    ],
+    "Loan_Purpose": [
+      "Business",
+      "Car",
+      "Education",
+      "Home",
+      "Personal"
+    ],
+    "Property_Area": [
+      "Rural",
+      "Semiurban",
+      "Urban"
+    ],
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Employer_Category": [
+      "Business",
+      "Government",
+      "MNC",
+      "Private",
+      "Unemployed"
+    ]
+  },
+  "education": [
+    "Graduate",
+    "Not Graduate"
+  ]
+}

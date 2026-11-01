@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flux Loan – Check Your Approval</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#c6ff2e;--purple:#7c5cff;--pink:#ff5fa2;--cyan:#19d3da;--orange:#ff9f1c;--dark:#17171c;--green:#12c26b;--red:#ff4d5e;--panel:#efeeff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',system-ui,sans-serif;background:linear-gradient(135deg,#d6ff3f 0%,#7ef0c8 55%,#8fd3ff 100%);color:var(--dark);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.app{width:100%;max-width:1360px;background:var(--dark);border-radius:44px;padding:12px;display:grid;grid-template-columns:260px 1fr;gap:12px;box-shadow:0 40px 80px rgba(23,23,28,.25)}
+.side{color:#fff;padding:26px 14px 14px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:10px;font-size:26px;font-weight:600;padding:0 14px 28px}
+.logo i{width:30px;height:30px;background:linear-gradient(135deg,var(--lime),var(--cyan));border-radius:10px 10px 10px 2px}
+.nav{display:flex;flex-direction:column;gap:6px;flex:1}
+.nav button{padding:16px 22px;border-radius:40px;font-size:17px;text-align:left;color:#fff}
+.nav button:hover{background:#2c2c35}.nav button.on{background:linear-gradient(90deg,var(--lime),#9dff7a);color:var(--dark);font-weight:500}
+.note{background:#25252d;border-radius:24px;padding:16px 18px;font-size:13px;line-height:1.45;color:#c9c9d6}
+.note b{display:flex;align-items:center;gap:8px;color:#fff;font-weight:500;margin-bottom:4px}
+.note b::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c,var(--green))}
+.main{background:var(--panel);border-radius:34px;padding:40px;min-width:0}
+h1{font-size:clamp(34px,4.6vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
+h1 span{background:linear-gradient(90deg,var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:16px;color:#4a4a5a;margin:14px 0 26px;max-width:640px;line-height:1.55}
+.view{display:none}.view.on{display:block}
+.card{background:#fff;border-radius:30px;padding:26px;min-width:0}
+.ch{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:500;margin-bottom:18px}
+.ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px;background:#f0edff}
+/* about */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.bubbles{position:relative;height:330px;margin:4px 0 12px}
+.bubble{position:absolute;border-radius:50%;display:grid;place-content:center;text-align:center;transition:all .7s cubic-bezier(.3,1.4,.5,1)}
+.bubble b{font-size:clamp(28px,3.4vw,46px);font-weight:600;line-height:1}.bubble span{font-size:13px;padding:0 10px}
+.p1{background:linear-gradient(135deg,var(--purple),#a78bff);color:#fff;width:230px;height:230px;left:0;top:0}
+.p2{background:var(--dark);color:#fff;width:190px;height:190px;right:2%;top:40px}
+.p3{background:linear-gradient(135deg,var(--lime),#9dff7a);width:150px;height:150px;left:34%;bottom:0;border:5px solid #fff}
+.cta{background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;border-radius:40px;padding:18px 34px;font-size:18px;font-weight:500;box-shadow:0 10px 24px rgba(124,92,255,.35);transition:transform .2s}
+.cta:hover{transform:translateY(-2px)}.cta:disabled{opacity:.6;transform:none}
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{border-radius:28px;padding:22px 24px;color:#fff;display:flex;gap:16px;align-items:center}
+.step b{font-size:38px;font-weight:600;opacity:.9;line-height:1}.step h3{font-size:18px;font-weight:500}.step p{font-size:14px;opacity:.92;margin-top:2px}
+.s1{background:linear-gradient(135deg,var(--purple),#a78bff)}.s2{background:linear-gradient(135deg,var(--orange),#ffcf4a);color:var(--dark)}.s3{background:linear-gradient(135deg,var(--cyan),#6ef0c0);color:var(--dark)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.chips span{border-radius:30px;padding:9px 18px;font-size:14px;font-weight:500}
+.fine{font-size:12px;color:#6a6a7a;margin-top:16px}
+/* check */
+.grid{display:grid;grid-template-columns:1.3fr 1fr;gap:12px;align-items:start}
+.grp{border:0;margin-bottom:22px}
+.grp h3{font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.grp h3::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--c)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+label{font-size:13px;color:#555;display:flex;flex-direction:column;gap:6px;font-weight:500}
+input,select{font:inherit;font-size:16px;padding:13px 16px;border:2px solid #ebe8ff;background:#f8f7ff;border-radius:18px;width:100%}
+input:focus,select:focus{border-color:var(--purple);background:#fff}
+.right{display:flex;flex-direction:column;gap:12px;position:sticky;top:12px}
+.pill{border-radius:20px;padding:4px 14px;font-size:13px;font-weight:500;display:inline-block;background:#e6e1ff;color:#4b36c9}
+.rb{position:relative;height:270px;margin-top:10px}
+.r1{background:linear-gradient(135deg,var(--purple),#a78bff);color:#fff;left:0;top:0;width:180px;height:180px}
+.r2{background:var(--dark);color:#fff;right:0;top:34px;width:150px;height:150px}
+.r3{background:linear-gradient(135deg,var(--lime),#9dff7a);left:36%;bottom:0;width:128px;height:128px;border:4px solid #fff}
+.r1 b{font-size:40px}.r2 b,.r3 b{font-size:30px}
+.dec{border-radius:30px;padding:26px;background:#fff;border:3px dashed #d9d4ff;color:#6a6a7a;text-align:center;font-size:15px}
+.dec.show{border:0;text-align:left;padding:0;overflow:hidden;color:var(--dark)}
+.banner{padding:26px 28px;color:#fff;display:flex;align-items:center;gap:18px}
+.banner.ok{background:linear-gradient(135deg,var(--green),#5be39a)}.banner.no{background:linear-gradient(135deg,var(--red),var(--pink))}
+.banner .big{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;font-size:34px;flex:none}
+.banner h2{font-size:clamp(26px,3vw,36px);font-weight:600;line-height:1.1}.banner p{font-size:15px;opacity:.95;margin-top:4px}
+.why{padding:22px 24px 26px}
+.why h4{font-size:17px;font-weight:600;margin-bottom:14px}
+.reason{display:flex;gap:14px;padding:14px 16px;border-radius:20px;margin-bottom:10px;font-size:15px;line-height:1.45}
+.reason i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none;background:var(--c)}
+.reason b{display:block;font-size:16px;font-weight:600}.reason small{display:block;font-size:13.5px;color:#444;margin-top:2px}
+.reason em{display:block;font-style:normal;font-size:13.5px;margin-top:6px;font-weight:500;color:var(--tc,#333)}
+.r-bad{background:#ffe9ec;--c:var(--red);--tc:#c4263a}.r-warn{background:#fff3dc;--c:var(--orange);--tc:#a55f00}.r-good{background:#e2fbee;--c:var(--green)}.r-info{background:#ece8ff;--c:var(--purple)}
+.toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,120px);background:var(--dark);color:#fff;padding:14px 26px;border-radius:40px;transition:transform .4s;z-index:9}
+.toast.show{transform:translate(-50%,0)}
+@media(max-width:1100px){.app{grid-template-columns:1fr;border-radius:30px}.side{padding:16px}.nav{flex-direction:row;flex-wrap:wrap}.nav button{padding:12px 18px;font-size:15px}.note{display:none}.hero,.grid{grid-template-columns:1fr}.right{position:static}}
+@media(max-width:640px){body{padding:8px}.main{padding:22px 16px}.fg{grid-template-columns:1fr}.p1{width:180px;height:180px}.p2{width:150px;height:150px}.p3{width:120px;height:120px}.bubbles{height:290px}.banner{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><i></i>flux loan</div>
+    <nav class="nav" id="nav">
+      <button class="on" data-v="about">About</button>
+      <button data-v="check">Check Loan</button>
+    </nav>
+    <div class="note" id="note"></div>
+  </aside>
+
+  <main class="main">
+    <!-- PHASE 1: ABOUT -->
+    <section class="view on" id="v-about">
+      <h1>Will your loan get <span>approved?</span></h1>
+      <p class="sub">Flux Loan is a smart loan checker. Enter a few details about the applicant and our machine-learning system gives an instant decision, the chance of approval, and the reasons behind it.</p>
+      <div class="hero">
+        <div class="card">
+          <div class="ch"><div class="ic">⚡</div>Built on real loan data</div>
+          <div class="bubbles">
+            <div class="bubble p1"><b>93.5%</b><span>prediction accuracy</span></div>
+            <div class="bubble p2"><b>1,000</b><span>past applications learned from</span></div>
+            <div class="bubble p3"><b>18</b><span>details checked</span></div>
+          </div>
+          <button class="cta" id="start">Check my loan →</button>
+        </div>
+        <div class="steps">
+          <div class="step s1"><b>1</b><div><h3>Enter your details</h3><p>Income, credit score, loan amount and a few more.</p></div></div>
+          <div class="step s2"><b>2</b><div><h3>Get an instant decision</h3><p>Accepted or rejected, with your approval chance.</p></div></div>
+          <div class="step s3"><b>3</b><div><h3>Understand why</h3><p>See the reasons and what you can improve.</p></div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;background:var(--dark);color:#fff">
+        <div class="ch"><div class="ic" style="background:#2c2c35">🔍</div>What we look at</div>
+        <div class="chips">
+          <span style="background:var(--lime);color:var(--dark)">Credit score</span><span style="background:var(--pink)">DTI ratio</span>
+          <span style="background:var(--purple)">Income</span><span style="background:var(--orange);color:var(--dark)">Loan amount &amp; term</span>
+          <span style="background:var(--cyan);color:var(--dark)">Savings &amp; collateral</span><span style="background:#fff;color:var(--dark)">Employment</span>
+          <span style="background:#ffd23f;color:var(--dark)">Existing loans</span>
+        </div>
+      </div>
+      <p class="fine">This is a student project made for learning. It is not real financial advice, and no bank decision depends on it.</p>
+    </section>
+
+    <!-- PHASE 2: CHECK -->
+    <section class="view" id="v-check">
+      <h1>Check your <span>loan</span></h1>
+      <p class="sub">Fill in the details below and press the button. Your result appears on the right.</p>
+      <div class="grid">
+        <form class="card" id="form"><div id="fields"></div><button class="cta" id="btn" type="submit" style="width:100%">Check approval</button></form>
+        <div class="right" id="res" aria-live="polite">
+          <div class="card">
+            <div class="ch"><div class="ic">🎯</div>Result <span class="pill" id="pill" style="margin-left:auto">Waiting</span></div>
+            <div class="rb">
+              <div class="bubble r1"><b id="bP">–</b><span>approval chance</span></div>
+              <div class="bubble r2"><b id="bA">93.5%</b><span>model accuracy</span></div>
+              <div class="bubble r3"><b id="bD">–</b><span>DTI ratio</span></div>
+            </div>
+          </div>
+          <div class="dec" id="dec">Your decision and the reasons will show here.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- 1. SETTINGS ---------- */
+const API = "";                 // same server. If backend is elsewhere: "https://your-app.onrender.com"
+const ACCURACY = 93.5;          // shown in the result
+const LTI_HIGH = 15;            // loan amount / total income above this = "too large"  (change if your income is yearly)
+const $ = id => document.getElementById(id);
+const toast = m => { const t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2600); };
+
+/* ---------- 2. FORM (names must match your dataset columns) ---------- */
+// ["n", column, label, default]  = number box      ["s", column, label] = dropdown
+const GROUPS = [
+  ["Income & credit","var(--purple)",[["n","Applicant_Income","Applicant income",60000],["n","Coapplicant_Income","Co-applicant income",0],["n","Credit_Score","Credit score",720],["n","DTI_Ratio","DTI ratio (0 to 1)",0.3],["n","Savings","Savings",150000],["n","Existing_Loans","Existing loans",1]]],
+  ["Loan details","var(--orange)",[["n","Loan_Amount","Loan amount",800000],["n","Loan_Term","Loan term",120],["n","Collateral_Value","Collateral value",500000],["s","Loan_Purpose","Loan purpose"],["s","Property_Area","Property area"]]],
+  ["About the applicant","var(--cyan)",[["n","Age","Age",32],["n","Dependents","Dependents",1],["s","Gender","Gender"],["s","Marital_Status","Marital status"],["s","Education_Level","Education level"],["s","Employment_Status","Employment status"],["s","Employer_Category","Employer category"]]]
+];
+// fallback dropdown values (replaced by the real ones from your data when the server is running)
+let CATS = {Employment_Status:["Salaried","Self-employed","Unemployed"],Marital_Status:["Married","Single"],Loan_Purpose:["Car","Education","Home","Personal"],Property_Area:["Rural","Semiurban","Urban"],Gender:["Female","Male"],Employer_Category:["Government","MNC","Private","Unemployed"],Education_Level:["Graduate","Not Graduate"]};
+function buildForm(){
+  const keep = {}; new FormData($("form")).forEach((v,k)=>keep[k]=v);
+  $("fields").innerHTML = GROUPS.map(g=>`<fieldset class="grp" style="--c:${g[1]}"><h3>${g[0]}</h3><div class="fg">${g[2].map(f=>
+    f[0]==="n" ? `<label>${f[2]}<input name="${f[1]}" type="number" step="any" value="${keep[f[1]]??f[3]}" required></label>`
+              : `<label>${f[2]}<select name="${f[1]}">${(CATS[f[1]]||[]).map(v=>`<option${keep[f[1]]===v?" selected":""}>${v}</option>`).join("")}</select></label>`).join("")}</div></fieldset>`).join("");
+}
+buildForm();
+
+/* ---------- 3. SERVER OR PREVIEW MODE ---------- */
+let live = false;
+function setNote(ok){ $("note").innerHTML = ok ? `<b>Private &amp; secure</b>Your details are used only to make this prediction and are not stored.`
+  : `<b style="--c:#f5c542">Preview mode</b>The server is not connected, so results here are only a rough preview.`; }
+setNote(false);
+fetch(API+"/meta").then(r=>r.json()).then(m=>{ live=true; CATS=Object.assign(CATS,m.categories,{Education_Level:m.education}); buildForm(); setNote(true); }).catch(()=>{});
+
+function previewScore(d){
+  const z=(d.Credit_Score-650)/45-(d.DTI_Ratio-0.35)*9+(d.Applicant_Income+d.Coapplicant_Income)/150000-d.Loan_Amount/3000000;
+  return 1/(1+Math.exp(-z));
+}
+
+/* ---------- 4. SUBMIT ---------- */
+$("form").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const d={}; new FormData(e.target).forEach((v,k)=>d[k]=(k in CATS)?v:parseFloat(v));
+  $("btn").disabled=true; $("btn").textContent="Checking…";
+  let p;
+  try{
+    if(!live) throw 0;
+    const r=await fetch(API+"/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
+    if(!r.ok) throw 0; p=(await r.json()).probability;
+  }catch{ p=previewScore(d); if(live) toast("Server error, showing a rough preview"); }
+  show(p,d);
+  $("btn").disabled=false; $("btn").textContent="Check approval";
+  $("res").scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+
+/* ---------- 5. RESULT + REASONS ---------- */
+function reasons(d){
+  const R=[]; const add=(t,title,text,tip)=>R.push({t,title,text,tip});
+  const income=d.Applicant_Income+d.Coapplicant_Income, lti=d.Loan_Amount/Math.max(income,1);
+  const cs=d.Credit_Score, dti=d.DTI_Ratio;
+  if(cs>=750) add("good",`Strong credit score (${cs})`,"A high credit score is the biggest factor in approvals.");
+  else if(cs<650) add("bad",`Low credit score (${cs})`,"A low credit score is the biggest reason loans get rejected.","Pay dues on time and keep card usage low to move above 700.");
+  else add("warn",`Average credit score (${cs})`,"Good, but not strong enough to stand out.","Getting above 750 would improve your chances a lot.");
+  if(dti<=0.30) add("good",`Healthy DTI ratio (${dti})`,"Your debt is small compared with your income.");
+  else if(dti>0.40) add("bad",`High DTI ratio (${dti})`,"Too much of your income already goes to paying debts.","Pay off some existing debt or ask for a smaller loan.");
+  else add("warn",`Borderline DTI ratio (${dti})`,"Close to the limit lenders prefer.","Bring it below 0.30 if you can.");
+  if(lti>LTI_HIGH) add("bad","Loan is large for your income","The loan amount is high compared with total income.","Ask for a smaller amount, or add a co-applicant income.");
+  else if(lti<=8) add("good","Loan fits your income","The amount asked is comfortable for your income.");
+  if(d.Existing_Loans>=3) add("bad",`Many existing loans (${d.Existing_Loans})`,"Several running loans make a new one riskier.","Close one or two loans before applying.");
+  else if(d.Existing_Loans===0) add("good","No existing loans","A clean slate helps your application.");
+  const jobs=`${d.Employment_Status} ${d.Employer_Category}`;
+  if(/unemploy/i.test(jobs)) add("bad","No steady employment income","Lenders want proof of regular income.","Steady employment or a working co-applicant improves your chances.");
+  else if(/salar/i.test(d.Employment_Status)) add("good","Steady salaried income","Regular salary gives lenders confidence.");
+  if(d.Savings>=0.2*d.Loan_Amount) add("good","Good savings cushion","Your savings cover a solid part of the loan.");
+  else if(d.Savings<0.05*d.Loan_Amount) add("bad","Low savings compared with the loan","Very little savings behind a large loan.","Build up savings or plan a bigger down payment.");
+  if(d.Collateral_Value>=d.Loan_Amount) add("good","Collateral covers the loan","The loan is fully backed by your collateral.");
+  else if(d.Collateral_Value<0.5*d.Loan_Amount) add("warn","Collateral covers less than half","Only a small part of the loan is secured.","Offer higher-value collateral if possible.");
+  return R;
+}
+const ICON={good:"✓",bad:"!",warn:"•",info:"i"};
+function show(p,d){
+  const ok=p>=0.5, pc=Math.round(p*100);
+  $("pill").textContent=ok?"Accepted":"Rejected"; $("pill").style.cssText=`margin-left:auto;background:${ok?"#d8f8e6;color:#0a7a41":"#ffe0e4;color:#c4263a"}`;
+  $("bP").textContent=pc+"%"; $("bD").textContent=d.DTI_Ratio;
+  const r1=document.querySelector(".r1"), r3=document.querySelector(".r3");
+  r1.style.width=r1.style.height=(150+pc*0.4)+"px"; r3.style.width=r3.style.height=(110+Math.min(d.DTI_Ratio,1)*40)+"px";
+  let R=reasons(d); const order=ok?{good:0,warn:1,bad:2}:{bad:0,warn:1,good:2};
+  R.sort((a,b)=>order[a.t]-order[b.t]); R=R.slice(0,6);
+  if(!ok&&!R.some(x=>x.t==="bad")) R.unshift({t:"info",title:"Mixed profile",text:"No single weak point stands out. The combination of your details lowered the score.",tip:"Improving your credit score or asking for a smaller loan is the best place to start."});
+  $("dec").className="dec show";
+  $("dec").innerHTML=`<div class="banner ${ok?"ok":"no"}"><div class="big">${ok?"✓":"✕"}</div><div><h2>Loan ${ok?"Accepted":"Rejected"}</h2><p>${ok?"Your profile looks strong for approval.":"Here are the likely reasons and what you can improve."}</p></div></div>
+  <div class="why"><h4>${ok?"Why it looks good":"Why it was rejected"}</h4>${R.map(x=>`<div class="reason r-${x.t}"><i>${ICON[x.t]}</i><div><b>${x.title}</b><small>${x.text}</small>${x.tip&&x.t!=="good"?`<em>Tip: ${x.tip}</em>`:""}</div></div>`).join("")}
+  <p class="fine">Reasons are based on common lending rules applied to your details. This is a student project, not financial advice.</p></div>`;
+}
+
+/* ---------- 6. NAVIGATION ---------- */
+function go(v){
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$("nav").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) go(b.dataset.v);});
+$("start").onclick=()=>go("check");
+</script>
+</body>
+</html>
